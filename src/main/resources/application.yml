@@ -1,0 +1,22 @@
+server:
+  address: localhost
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 1234
+    url: jdbc:mysql://localhost:3306/mart?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 543593943506-o4olj9gnsdjvupjn50fi7fhp0hr2iad9.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
