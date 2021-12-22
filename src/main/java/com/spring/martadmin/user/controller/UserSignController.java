@@ -80,7 +80,7 @@ public class UserSignController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "정상적으로 회원가입이 되었습니다."),
             @ApiResponse(code = 400, message = "유효한 입력값이 아닙니다."),
-            @ApiResponse(code = 403, message = "이메일 또는 핸드폰 번호가 중복되었습니다.")
+            @ApiResponse(code = 403, message = "이메일 또는 핸드폰 번호가 중복되었습니다. ")
     })
     @PostMapping("/users/signup")
     public ResponseEntity<Void> signUp(@ApiParam("회원가입 정보") @Valid @RequestBody UserSignUpRequestDto requestDto) throws DuplicateDataException {
