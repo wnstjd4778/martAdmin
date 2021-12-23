@@ -6,6 +6,7 @@ import com.spring.martadmin.user.domain.User;
 import com.spring.martadmin.user.repository.AdminRepository;
 import com.spring.martadmin.user.repository.UserRepository;
 import io.jsonwebtoken.ExpiredJwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 // HTTP 기본 인증 헤더를 처리하여 결과를 SecurityContextHolder에 저장한다.
+@Slf4j
 public class JwtCommonAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UserRepository userRepository;
@@ -38,7 +40,7 @@ public class JwtCommonAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader("Authorization"); // jwt token이 어디있는지 알기 위해, Authorization header를 찾는다.
-
+        log.info("jwt토큰 이름 : " + header);
         // 만약 header에 Bearer가 포함되어 있지 않거나 header가 null이라면 작업을 끝낸다.
         if(header == null || !header.startsWith("Bearer")) {
             chain.doFilter(request, response);
@@ -50,7 +52,7 @@ public class JwtCommonAuthorizationFilter extends BasicAuthenticationFilter {
             @Override
             public String getHeader(String name) {
                 if(name.equals("Authorization")) {
-                    String basic = request.getHeader("Authorization").replace("Bearer", "");
+                    String basic = request.getHeader("Authorization").replace("Bearer ", "");
                     return basic;
                 }
                 return super.getHeader(name);

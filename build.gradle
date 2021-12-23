@@ -37,7 +37,7 @@ dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1' // Jwt 토큰
     implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.6.1'
-
+    implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2' // sms문자 서비스
 }
 
 test {

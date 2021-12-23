@@ -1,8 +1,6 @@
 package com.spring.martadmin.advice;
 
-import com.spring.martadmin.advice.exception.DuplicateDataException;
-import com.spring.martadmin.advice.exception.OAuth2AuthenticationProcessingException;
-import com.spring.martadmin.advice.exception.SessionUnstableException;
+import com.spring.martadmin.advice.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,6 +29,18 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     protected ErrorResponse handleOAuth2AuthenticationProcessingException (OAuth2AuthenticationProcessingException e) {
         return ErrorResponse.ErrorOf(403, e.getMessage());
+    }
+
+    @ExceptionHandler(SMSException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected ErrorResponse handleSMSException(SMSException e) {
+        return ErrorResponse.ErrorOf(500, e.getMessage());
+    }
+
+    @ExceptionHandler(NotFoundDataException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    protected ErrorResponse handleNotFoundException(NotFoundDataException e) {
+        return ErrorResponse.ErrorOf(404, e.getMessage());
     }
 
 }
