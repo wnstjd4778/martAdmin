@@ -1,5 +1,6 @@
 package com.spring.martadmin.market.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.martadmin.advice.BaseTimeEntity;
 import com.spring.martadmin.security.UserPrincipal;
 import com.spring.martadmin.user.domain.Admin;
@@ -13,9 +14,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 import javax.persistence.*;
 import java.text.ParseException;
-import java.util.Date;
+import java.util.*;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "market")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,12 +26,12 @@ public class Market extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "market_no")
-    private int no; // 마켓 고유번호
+    private Integer no; // 마켓 고유번호
 
     @Column(name = "market_name", length = 45)
     private String name; // 마켓 이름
 
-    @Column(name = "market_tel", length = 45, unique = true)
+    @Column(name = "market_tel", length = 45)
     private String tel; // 마켓 전화번호
 
     @Column(name = "market_open_time")
@@ -45,27 +47,28 @@ public class Market extends BaseTimeEntity {
     @JoinColumn(name = "admin_no")
     private Admin admin; // 관리자 고유번호
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no")
-    private User user; // 유저 고유번호
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "market_no")
+    private List<User> users = new ArrayList<>(); // 유저 고유번호
 
     public void setAdmin(Admin admin) {
         this.admin = admin;
         admin.getMarkets().add(this); // 양방향 연관관계 설정
     }
 
+
     @Builder
-    public Market(String name, String tel, String openTime, String closeTime, String location, Admin admin, User user) {
+    public Market(String name, String tel, String openTime, String closeTime, String location, Admin admin, List<User> users) {
         this.name = name;
         this.tel = tel;
         this.openTime = openTime;
         this.closeTime = closeTime;
         this.location = location;
         this.admin = admin;
-        this.user = user;
+        this.users = users;
     }
 
-    public static Market createMarket(Admin admin, User user, String name, String tel, String openTime, String closeTime, String location) {
+    public static Market createMarket(Admin admin, List<User> users, String name, String tel, String openTime, String closeTime, String location) {
         Market market = Market.builder()
                 .admin(admin)
                 .name(name)
@@ -73,16 +76,15 @@ public class Market extends BaseTimeEntity {
                 .openTime(openTime)
                 .closeTime(closeTime)
                 .location(location)
-                .user(user)
+                .users(users)
                 .build();
 
         return market;
     }
 
     public Market update(String name, String tel, String openTime, String closeTime, String location) throws ParseException {
-        if (this.user != null && this.admin != null) { // 양방향 연관관계를 다시 생성하기위해 기존의 관계를 제거
+        if (this.users != null && this.admin != null) { // 양방향 연관관계를 다시 생성하기위해 기존의 관계를 제거
             this.admin.getMarkets().remove(this);
-            this.user.getMarkets().remove(this);
         }
         this.name = name;
         this.tel = tel;
@@ -90,11 +92,23 @@ public class Market extends BaseTimeEntity {
         this.closeTime = closeTime;
         this.location = location;
 
-        user.getMarkets().add(this); // 양방향 연관관계 설정
         admin.getMarkets().add(this); // 양방향 연관관계 설정
 
         return this;
     }
 
+    public static Market subscribeMarket(Admin admin, List<User> users, String name, String tel, String openTime, String closeTime, String location) {
+        Market market = Market.builder()
+                .admin(admin)
+                .name(name)
+                .tel(tel)
+                .openTime(openTime)
+                .closeTime(closeTime)
+                .location(location)
+                .users(users)
+                .build();
+
+        return market;
+    }
 
 }

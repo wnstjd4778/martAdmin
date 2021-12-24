@@ -45,8 +45,8 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_sns_key", length = 45, unique = true)
     private String snsKey; // 사용자 SNS 고유 key
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany
+    @JoinColumn(name = "user_no")
     private List<Market> markets = new ArrayList<>();
 
     @Builder

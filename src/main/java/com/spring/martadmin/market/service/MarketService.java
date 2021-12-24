@@ -1,5 +1,6 @@
 package com.spring.martadmin.market.service;
 
+import com.google.common.collect.Lists;
 import com.spring.martadmin.advice.exception.NotFoundDataException;
 import com.spring.martadmin.advice.exception.SessionUnstableException;
 import com.spring.martadmin.market.domain.Market;
@@ -36,7 +37,7 @@ public class MarketService {
 
         User user = userRepository.findByNo(1)
                 .orElseThrow(() -> new Exception("확인용"));
-        market = Market.createMarket(admin, user, requestDto.getName(), requestDto.getTel(), requestDto.getOpenTime(), requestDto.getCloseTime(), requestDto.getLocation());
+        market = Market.createMarket(admin, Lists.newArrayList(user), requestDto.getName(), requestDto.getTel(), requestDto.getOpenTime(), requestDto.getCloseTime(), requestDto.getLocation());
         marketRepository.save(market);
 
         return MarketResponseDto.of(market);
@@ -71,5 +72,6 @@ public class MarketService {
         }
         marketRepository.deleteAllByNoAndAdmin(marketNo, admin);
     }
+
 
 }
