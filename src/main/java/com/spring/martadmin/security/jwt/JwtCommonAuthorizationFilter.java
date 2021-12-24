@@ -42,7 +42,7 @@ public class JwtCommonAuthorizationFilter extends BasicAuthenticationFilter {
         String header = request.getHeader("Authorization"); // jwt token이 어디있는지 알기 위해, Authorization header를 찾는다.
         log.info("jwt토큰 이름 : " + header);
         // 만약 header에 Bearer가 포함되어 있지 않거나 header가 null이라면 작업을 끝낸다.
-        if(header == null || !header.startsWith("Bearer")) {
+        if(header == null || header == "" || !header.startsWith("Bearer")) {
             chain.doFilter(request, response);
             return;
         }

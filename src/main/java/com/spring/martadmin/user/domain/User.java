@@ -1,11 +1,16 @@
 package com.spring.martadmin.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.spring.martadmin.advice.BaseTimeEntity;
+import com.spring.martadmin.market.domain.Market;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -39,6 +44,10 @@ public class User extends BaseTimeEntity {
 
     @Column(name = "user_sns_key", length = 45, unique = true)
     private String snsKey; // 사용자 SNS 고유 key
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Market> markets = new ArrayList<>();
 
     @Builder
     public User(String email, String password, boolean tempPassword, String tel, String name, AuthProvider snsType, String snsKey) {

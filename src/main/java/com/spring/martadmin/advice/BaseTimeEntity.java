@@ -1,4 +1,4 @@
-package com.spring.martadmin.user.domain;
+package com.spring.martadmin.advice;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

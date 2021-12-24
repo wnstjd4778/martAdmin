@@ -1,11 +1,15 @@
 package com.spring.martadmin.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.spring.martadmin.advice.BaseTimeEntity;
+import com.spring.martadmin.market.domain.Market;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,6 +36,10 @@ public class Admin extends BaseTimeEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
+    private List<Market> markets = new ArrayList<>();
 
     @Builder
     public Admin(String id, String password, List roles) {
