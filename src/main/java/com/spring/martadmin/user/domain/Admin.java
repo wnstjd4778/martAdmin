@@ -37,10 +37,6 @@ public class Admin extends BaseTimeEntity {
         this.password = password;
     }
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
-    private List<Market> markets = new ArrayList<>();
-
     @Builder
     public Admin(String id, String password, List roles) {
         this.id = id;

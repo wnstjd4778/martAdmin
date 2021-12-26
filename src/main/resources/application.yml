@@ -12,6 +12,9 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     generate-ddl: true
     show-sql: true
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
 
   security:
     oauth2:
@@ -21,3 +24,5 @@ spring:
             client-id: 543593943506-o4olj9gnsdjvupjn50fi7fhp0hr2iad9.apps.googleusercontent.com
             client-secret: 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
             scope: profile, email
+  file:
+    path: C:/Users/smy47/IdeaProjects/martAdmin/src/main/java/com/spring/martadmin/product/img/

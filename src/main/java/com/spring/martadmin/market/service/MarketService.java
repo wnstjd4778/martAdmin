@@ -37,7 +37,7 @@ public class MarketService {
 
         User user = userRepository.findByNo(1)
                 .orElseThrow(() -> new Exception("확인용"));
-        market = Market.createMarket(admin, Lists.newArrayList(user), requestDto.getName(), requestDto.getTel(), requestDto.getOpenTime(), requestDto.getCloseTime(), requestDto.getLocation());
+        market = Market.createMarket(admin, requestDto.getName(), requestDto.getTel(), requestDto.getOpenTime(), requestDto.getCloseTime(), requestDto.getLocation());
         marketRepository.save(market);
 
         return MarketResponseDto.of(market);

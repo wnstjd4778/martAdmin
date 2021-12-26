@@ -45,9 +45,6 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_sns_key", length = 45, unique = true)
     private String snsKey; // 사용자 SNS 고유 key
 
-    @OneToMany
-    @JoinColumn(name = "user_no")
-    private List<Market> markets = new ArrayList<>();
 
     @Builder
     public User(String email, String password, boolean tempPassword, String tel, String name, AuthProvider snsType, String snsKey) {

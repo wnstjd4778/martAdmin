@@ -1,6 +1,5 @@
 package com.spring.martadmin.market.controller;
 
-import com.spring.martadmin.advice.exception.NotFoundDataException;
 import com.spring.martadmin.market.dto.MarketResponseDto;
 import com.spring.martadmin.market.dto.MarketSaveRequestDto;
 import com.spring.martadmin.market.dto.MarketUpdateRequestDto;
