@@ -1,5 +1,8 @@
 package com.spring.martadmin.product.domain;
 
+import com.spring.martadmin.advice.BaseTimeEntity;
+import com.spring.martadmin.cart.domain.Cart;
+import com.spring.martadmin.cart.domain.CartItem;
 import com.spring.martadmin.market.domain.Market;
 import lombok.*;
 
@@ -10,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "product_detail")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductDetail {
+public class ProductDetail extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,5 +62,6 @@ public class ProductDetail {
 
         return this;
     }
+
 
 }

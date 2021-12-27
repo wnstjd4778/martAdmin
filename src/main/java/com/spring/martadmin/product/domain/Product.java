@@ -1,5 +1,6 @@
 package com.spring.martadmin.product.domain;
 
+import com.spring.martadmin.advice.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Product {
+public class Product extends BaseTimeEntity {
 
     @Id
     @Column(name = "product_no")
