@@ -36,9 +36,18 @@ public class CartResponseDto {
         }
     }
 
+
     public static CartResponseDto of(List<CartItem> cartItems, Cart cart) {
+
+        List<CartItemDto> newCartItems = cartItems.stream().map(cartItem -> new CartItemDto(cartItem)).collect(Collectors.toList());
+
+        int totalPrice = 0;
+        for(int i = 0; i < newCartItems.size(); i++) {
+            totalPrice += (newCartItems.get(i).productPrice * newCartItems.get(i).count);
+        }
         return CartResponseDto.builder()
-                .cartItems(cartItems.stream().map(cartItem -> new CartItemDto(cartItem)).collect(Collectors.toList()))
+                .cartItems(newCartItems)
+                .totalPrice(totalPrice)
                 .cartNo(cart.getNo())
                 .build();
     }

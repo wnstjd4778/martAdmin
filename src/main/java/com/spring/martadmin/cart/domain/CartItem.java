@@ -34,6 +34,11 @@ public class CartItem extends BaseTimeEntity {
     @JoinColumn(name = "product_detail_no", nullable = false)
     private ProductDetail productDetail; // 제품 상세 고유번호
 
+    public void setCart(Cart cart) {
+        this.cart = cart;
+        cart.getCartItems().add(this);
+    }
+
     public static CartItem createCartItem(Cart cart, ProductDetail productDetail) {
         CartItem cartItem = CartItem.builder()
                 .cart(cart)

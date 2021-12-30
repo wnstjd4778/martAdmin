@@ -7,6 +7,8 @@ spring:
     password: 1234
     url: jdbc:mysql://localhost:3306/mart?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
+
+
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -16,6 +18,20 @@ spring:
     hibernate:
       ddl-auto: update
 
+
+  profiles:
+    active: local
+
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+  freemarker:
+    cache: false
+
+
   security:
     oauth2:
       client:
@@ -24,5 +40,7 @@ spring:
             client-id: 543593943506-o4olj9gnsdjvupjn50fi7fhp0hr2iad9.apps.googleusercontent.com
             client-secret: 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
             scope: profile, email
+
+
   file:
     path: C:/Users/smy47/IdeaProjects/martAdmin/src/main/java/com/spring/martadmin/product/img/

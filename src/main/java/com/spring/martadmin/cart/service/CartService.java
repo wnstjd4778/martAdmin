@@ -137,4 +137,17 @@ public class CartService {
         }
     }
 
+    // 카트 전체 삭제
+    public void removeAllCartItem(User user, Cart cart) {
+        List<CartItem> cartItems = cartItemRepository.findAllByCart(cart);
+
+        // 카트에 담겨있는 카트 아이템 모두 삭제
+        for(CartItem cartItem : cartItems) {
+            cartItem.removeCartItem();
+            cartItemRepository.delete(cartItem);
+        }
+
+        cartRepository.delete(cart);
+    }
+
 }

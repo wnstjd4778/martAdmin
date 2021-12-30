@@ -38,6 +38,13 @@ dependencies {
     implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.6.1'
     implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2' // sms문자 서비스
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.6.0'
+    implementation group: 'org.webjars', name: 'sockjs-client', version: '1.1.2'
+    implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3-1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.5.2'
+
+    implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+
 }
 
 test {

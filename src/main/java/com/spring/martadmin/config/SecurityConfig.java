@@ -67,6 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors() // cors허용
                     .and()
+                .headers()
+                    .frameOptions().sameOrigin() // Sockjs는 기본적으로 HTML, iframe 요소를 통한 전송을 허용하지 않도록 설젇되는데 해당 내용을 해제한다.
+                    .and()
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 토큰으로 인증하므로 세션 필요X
                     .and()

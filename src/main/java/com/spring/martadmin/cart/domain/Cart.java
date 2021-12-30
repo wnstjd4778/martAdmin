@@ -5,6 +5,8 @@ import com.spring.martadmin.user.domain.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cart")
@@ -23,6 +25,9 @@ public class Cart extends BaseTimeEntity {
     @JoinColumn(name = "user_no")
     private User user; // 고객 고유번호
 
+    @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CartItem> cartItems = new ArrayList<>();
+
 
     // 장바구니 생성
     public static Cart createCart(User user) {
@@ -38,6 +43,18 @@ public class Cart extends BaseTimeEntity {
         this.user = null;
     }
 
+    //해당 유저의 장바구니중 특정 제품을 삭제
+    public void removeCartItem(CartItem cartItem) {
+        this.cartItems.remove(cartItem);
+    }
+
+    public int getTotalPrice(){
+        int totalPrice = 0;
+        for(CartItem cartItem : cartItems) {
+            totalPrice += (cartItem.getCount() * cartItem.getProductDetail().getOnSalePrice());
+        }
+        return totalPrice;
+    }
 
 
 }
