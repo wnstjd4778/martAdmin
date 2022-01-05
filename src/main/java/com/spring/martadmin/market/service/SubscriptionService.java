@@ -3,6 +3,7 @@ package com.spring.martadmin.market.service;
 import com.spring.martadmin.advice.exception.NotFoundDataException;
 import com.spring.martadmin.market.domain.Market;
 import com.spring.martadmin.market.domain.Subscription;
+import com.spring.martadmin.market.dto.SubscriptionResponseDto;
 import com.spring.martadmin.market.repository.MarketRepository;
 import com.spring.martadmin.market.repository.SubscriptionRepository;
 import com.spring.martadmin.user.domain.User;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,5 +58,22 @@ public class SubscriptionService {
 
         subscriptionRepository.deleteByMarketAndUser(market, user);
         return;
+    }
+
+    //구독한 마켓을 가져온다.
+    @Transactional
+    public SubscriptionResponseDto getSubscribeMarket(int userNo) throws NotFoundDataException {
+
+        User user = userRepository.findByNo(userNo)
+                .orElseThrow(() -> new NotFoundDataException("해당 유저를 찾을 수 없습니다."));
+
+        List<Subscription> subscriptions = subscriptionRepository.findAllByUser(user);
+
+        List<Market> markets = new ArrayList<>();
+        for(int i = 0; i < subscriptions.size(); i++) {
+            markets.add(subscriptions.get(i).getMarket());
+        }
+        log.info("{}", markets.get(0).getNo());
+        return SubscriptionResponseDto.of(markets);
     }
 }

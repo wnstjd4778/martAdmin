@@ -1,10 +1,7 @@
 package com.spring.martadmin.product.controller;
 
 
-import com.spring.martadmin.product.dto.ProductDetailDeleteRequestDto;
-import com.spring.martadmin.product.dto.ProductDetailResponseDto;
-import com.spring.martadmin.product.dto.ProductDetailSaveRequestDto;
-import com.spring.martadmin.product.dto.ProductDetailUpdateRequestDto;
+import com.spring.martadmin.product.dto.*;
 import com.spring.martadmin.product.service.ProductDetailService;
 import com.spring.martadmin.security.UserPrincipal;
 import io.swagger.annotations.*;
@@ -69,5 +66,19 @@ public class ProductDetailController {
                                                                         @ApiParam("마켓에 등록할 상품의 정보") @Valid @RequestBody ProductDetailDeleteRequestDto requestDto) throws Exception {
         ProductDetailResponseDto productDetailResponseDto = productDetailService.deleteProductDetail(requestDto, userPrincipal.getNo());
         return ResponseEntity.status(HttpStatus.OK).body(productDetailResponseDto);
+    }
+
+    @ApiOperation(value = "해당 마켓의 상품을 모두 가져온다", notes = "해당 마켓의 상품을 모두 가져온다", authorizations = { @Authorization(value = "jwtToken")})
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "해당 마켓의 상품을 모두 가져왔습니다."),
+            @ApiResponse(code = 401, message = "유효한 입력값이 아닙니다."),
+            @ApiResponse(code = 403, message = "상품 가져오기에 실패하였습니다.")
+    })
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("")
+    public ResponseEntity<ProductDetailGetResponseDto> getProductDetails(@ApiParam("마켓의 고유번호") @RequestParam(value = "marketNo") int marketNo) throws Exception {
+        log.info("{}", marketNo);
+        ProductDetailGetResponseDto productDetailGetResponseDto = productDetailService.getProductDetails(marketNo);
+        return ResponseEntity.status(HttpStatus.OK).body(productDetailGetResponseDto);
     }
 }

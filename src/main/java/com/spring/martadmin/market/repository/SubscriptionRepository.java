@@ -5,6 +5,7 @@ import com.spring.martadmin.market.domain.Subscription;
 import com.spring.martadmin.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription, Integer> {
@@ -12,4 +13,6 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Inte
     public void deleteByMarketAndUser(Market market, User user);
 
     public Optional<Subscription> findByMarketAndUser(Market market, User user);
+
+    public List<Subscription> findAllByUser(User user);
 }

@@ -67,7 +67,6 @@ public class UserService {
     //본인확인 인증번호를 핸드폰으로 전송
     public int validatePhone(String phoneNo) throws SMSException {
         int validNum;
-
         do {
             validNum = (int) (Math.random() * 100000);
         } while (validNum < 10000);

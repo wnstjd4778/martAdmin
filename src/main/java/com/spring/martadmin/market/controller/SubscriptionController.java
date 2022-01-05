@@ -1,6 +1,7 @@
 package com.spring.martadmin.market.controller;
 
 import com.spring.martadmin.advice.exception.NotFoundDataException;
+import com.spring.martadmin.market.dto.SubscriptionResponseDto;
 import com.spring.martadmin.market.service.SubscriptionService;
 import com.spring.martadmin.security.UserPrincipal;
 import io.swagger.annotations.*;
@@ -50,6 +51,19 @@ public class SubscriptionController {
         subscriptionService.unSubscribeMarket(userPrincipal.getNo(), marketNo);
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @ApiOperation(value = "유저가 구독한 마켓을 가져온다(3개)", notes = "유저가 구독한 마켓을 가져온다(3개)", authorizations = { @Authorization(value = "jwtToken")})
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "정상적으로 마켓을 가져왔습니다."),
+            @ApiResponse(code = 404, message = "해당 마켓을 찾을 수 없습니다.")
+    })
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("")
+    public ResponseEntity<SubscriptionResponseDto> getSubscribeMarket(@AuthenticationPrincipal UserPrincipal userPrincipal) throws NotFoundDataException {
+        SubscriptionResponseDto subscriptionResponseDto = subscriptionService.getSubscribeMarket(userPrincipal.getNo());
+
+        return ResponseEntity.status(HttpStatus.OK).body(subscriptionResponseDto);
     }
 
 

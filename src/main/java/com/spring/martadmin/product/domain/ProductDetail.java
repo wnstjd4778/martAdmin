@@ -30,7 +30,7 @@ public class ProductDetail extends BaseTimeEntity {
     @JoinColumn(name = "market_no")
     private Market market;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_no")
     private Product product;
 

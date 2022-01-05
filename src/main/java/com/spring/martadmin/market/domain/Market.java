@@ -45,6 +45,7 @@ public class Market extends BaseTimeEntity {
     @Column(name = "market_location")
     private String location; // 마켓 위치
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_no")
     private Admin admin; // 관리자 고유번호
