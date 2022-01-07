@@ -4,7 +4,9 @@
 # 개발환경
 + Spring Security
 + Oauth2 Client
-+ jjwt
++ jwt
 + nurigo
 + MySQL(RDS)
 + Swagger2
++ MYSQL
++ 
